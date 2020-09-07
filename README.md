@@ -1,1 +1,1 @@
-# UNET---Segmentation-model-for-hotspot-detection
+# UNET Segmentation-model-for-hotspot-detection
