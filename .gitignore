@@ -134,3 +134,6 @@ dmypy.json
 
 #images
 test_imgs/
+
+#logs
+/logs
