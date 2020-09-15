@@ -12,14 +12,22 @@ import argparse
 from pathlib import Path
 import glob
 from image_processor import load_and_preprocess_image, load_and_preprocess_testImage, augment_image
+from utils.visualize_images import plot_images, plot_orig_predMask
 from models.mobilenet_unet import unet_model
-from loss import DiceLoss, iou, dice_coef
+from loss import iou, dice_coef, dice_loss
 from datetime import datetime
 import random
 #tensoboard setup..
 logdir = "logs/scalars/" + datetime.now().strftime("%Y%m%d-%H%M%S")
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
+#model_filename = "model.h5"
 
+model_filename="weights-improvement-max-{epoch:02d}-{dice_coef:.2f}.hdf5"
+
+
+#tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
+callbacks = [tf.keras.callbacks.EarlyStopping(monitor='dice_coef', patience=10, restore_best_weights=False, mode="max"),\
+             tf.keras.callbacks.TensorBoard(log_dir=logdir, histogram_freq=0,write_graph=True, write_images=True), 
+             tf.keras.callbacks.ModelCheckpoint(model_filename, verbose=1, monitor="dice_coef", mode="max", save_best_only=True)]
 
 argparser = argparse.ArgumentParser(description=__doc__)
 argparser.add_argument('-d','--dataset',help='folder containing images and masks',\
@@ -42,39 +50,7 @@ IMG_SIZE = (args.input_width, args.input_height)
 SAMPLE_IMAGES = 5
 
 
-def display(display_list):
-    import matplotlib.pyplot as plt
-
-    plt.figure(figsize=(15, 15))
-
-    title = ['Input Image', "Predicted Mask"]
-
-    for i in range(2):
-        plt.subplot(1, 2, i+1)
-        plt.title(title[i])
-        plt.imshow(display_list[i])
-        plt.axis('off')
-    plt.show()
-    
-def plot_images(orig_imgs, mask_imgs, pred_imgs):
-    import matplotlib.pyplot as plt
-    
-    fig, axes = plt.subplots(orig_imgs.shape[0], 3, figsize=(20, 20), squeeze=False)
-    axes[0,0].set_title("original", fontsize=15)
-    axes[0,1].set_title("original mask", fontsize=15)
-    axes[0,2].set_title("predicted mask", fontsize=15)
-    
-    for m in range(0, orig_imgs.shape[0]):
-        axes[m,0].imshow(orig_imgs[m])
-        axes[m, 0].set_axis_off()
-        axes[m,1].imshow(mask_imgs[m])
-        axes[m, 1].set_axis_off()
-        axes[m,2].imshow(pred_imgs[m])
-        axes[m, 2].set_axis_off()
-
-    plt.tight_layout()
-    plt.show()
-    
+   
     
 def sample(img_path, mask_path):
     images = []
@@ -103,6 +79,8 @@ def main():
                         .shuffle(buffer_size=10000).batch(batch_size)
 
 
+    """
+    
     #generate testing data
     val_dataset = tf.data.Dataset.from_tensor_slices(test_imgs)
     val_dataset = val_dataset.map(load_and_preprocess_testImage).batch(batch_size)
@@ -110,52 +88,46 @@ def main():
     val_dataset_mask = tf.data.Dataset.from_tensor_slices(test_masks)
     val_dataset_mask = val_dataset_mask.map(load_and_preprocess_testImage).batch(batch_size)
 
+    """
+
+
     model  = unet_model()
     
       
-    lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(0.01/10,
+    lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(0.01,
         decay_steps=1000000,
         decay_rate=0.5,
         staircase=True)
     
     
     #model.summary()
-    model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=lr_schedule), loss=DiceLoss(), \
+    model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=lr_schedule), loss=dice_loss, \
                   metrics=[dice_coef, iou])
+                    
+    model.fit(train_data.repeat(), epochs=80,steps_per_epoch=100, callbacks=callbacks)
 
     
-                        
-    #model.fit(train_data, epochs=50,callbacks=[tensorboard_callback])
-    #model.save_weights("model.h5")
-    model.load_weights("model.h5")
-    #model.fit(train_data, epochs=5,callbacks=[tensorboard_callback])
+    
+    
+    """
+    model.load_weights("weights-improvement-max-22-0.26.hdf5")
     
   
     
+    
     pred_mask = model.predict(val_dataset)
 
-
-    orig_imgs = np.zeros((SAMPLE_IMAGES, 224, 224, 3), dtype=np.float32)
-    groundtruth_mask = np.zeros((SAMPLE_IMAGES, 224,224,3), dtype=np.float32)
-    
     
     assert len(list(val_dataset.as_numpy_iterator())) == 1
     assert len(list(val_dataset_mask.as_numpy_iterator())) == 1
 
-    k = list(val_dataset.as_numpy_iterator())[0]
-    print ("********")
-    print (k.shape)
     
-    orig_imgs = np.copy(list(val_dataset.as_numpy_iterator())[0])
-
-    groundtruth_mask = np.copy(list(val_dataset_mask.as_numpy_iterator())[0])
+    orig_imgs = list(val_dataset.as_numpy_iterator())[0]
+    groundtruth_mask = list(val_dataset_mask.as_numpy_iterator())[0]
     
-    print (orig_imgs.shape)
-    
-    #display([masks[0], output[0]])
     plot_images(orig_imgs, groundtruth_mask, pred_mask)
+    """
     
-        
     
 
 if __name__ == "__main__":

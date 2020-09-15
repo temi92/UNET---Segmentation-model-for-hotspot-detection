@@ -34,7 +34,6 @@ def load_and_preprocess_testImage(image):
     return image
 
 
-
 @tf.function
 def augment_image(image, mask):
     # - Symmetries
@@ -75,3 +74,7 @@ def augment_image(image, mask):
         image = tf.image.random_contrast(image=image, lower=.9, upper=1.1)
     """
     return image, mask
+
+
+
+
