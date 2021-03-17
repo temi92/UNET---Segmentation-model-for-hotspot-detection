@@ -35,10 +35,12 @@ def unet_model(finetune=False):
     # Encoder/Feature extractor
     mnv2=tf.keras.applications.mobilenet_v2.MobileNetV2(input_shape=(224, 224, 3),alpha=0.5, include_top=False, weights='imagenet')
     
+
     if (finetune):
-      for layer in mnv2.layers[:-3]:
-        layer.trainable = False
+      for layer in mnv2.layers[:-10]:
+        layer.trainable = True
         
+  
     
     x = mnv2.layers[-4].output
 

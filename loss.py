@@ -6,7 +6,9 @@ Created on Mon Sep  7 15:00:55 2020
 """
 
 import tensorflow as tf
-from keras import backend as K
+from tensorflow.keras import backend as K
+from tensorflow.keras.losses import binary_crossentropy
+
 
 smooth = 1.
 
@@ -30,3 +32,5 @@ def dice_loss(y_true, y_pred, smooth=1.):
     return 1 - (2. * intersection + smooth) / (K.sum(y_true_f) + K.sum(y_pred_f) + smooth)
 
 
+def bce_dice_loss(y_true, y_pred):
+    return binary_crossentropy(y_true, y_pred) + dice_loss(y_true, y_pred)
