@@ -31,13 +31,13 @@ optional arguments:
 ```
 After running this script you should have your generate image masks.
 
-## training
+## Training
 
 To train a model for hot spot detection run the following:
 
 ```bash
 
-usage: train.py [-h] -d DATASET -o OUTPUT [-e EPOCHS] [-lr LEARNING_RATE]
+python train.py [-h] -d DATASET -o OUTPUT [-e EPOCHS] [-lr LEARNING_RATE]
                 [-resume RESUME] [--batch_size BATCH_SIZE]
                             
  -d DATASET, --dataset DATASET
@@ -53,3 +53,23 @@ usage: train.py [-h] -d DATASET -o OUTPUT [-e EPOCHS] [-lr LEARNING_RATE]
                         batch size
 
 ```
+
+## Evaluation 
+
+To run inference on the trained model run the command as follows:
+```bash
+
+python evaluation.py [-h] -d DATASET -w WEIGHTS [-b BATCH_SIZE]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d DATASET, --dataset DATASET
+                        folder containing images
+  -w WEIGHTS, --weights WEIGHTS
+                        paths to weights file
+  -b BATCH_SIZE, --batch_size BATCH_SIZE
+                        batch size
+```
+
+Example of the results are shown below:
+![display](results.png)
