@@ -73,3 +73,11 @@ optional arguments:
 
 Example of the results are shown below:
 ![display](results.png)
+
+
+## TO DO LIST
+- [] dockerise application
+- []  Investigate other CNN backbones for segmentation
+- []  Fusion between rgb and thermal imagery for segmentation
+- []  Implement user interface
+- [] Bootstrapping/Bagging techniques to futher improve model acuracy
