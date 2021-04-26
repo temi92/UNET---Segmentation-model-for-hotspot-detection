@@ -1,11 +1,10 @@
 from flask import Flask, render_template, request, jsonify, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 
 from sklearn.preprocessing import LabelEncoder
 from PIL import Image, ImageDraw, ImageFont
-from hotspotDetection import Roi
 import tensorflow as tf
 import pickle
 import numpy as np
