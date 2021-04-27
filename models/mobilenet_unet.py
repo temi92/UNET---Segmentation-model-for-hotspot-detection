@@ -6,7 +6,6 @@ Created on Wed Aug  5 22:27:54 2020
 """
 import tensorflow as tf
 from tensorflow.keras.models import Model
-from keras.models import load_model
 
 from tensorflow.keras.layers import Dense, Input,Flatten, concatenate,Reshape, Conv2D, MaxPooling2D, Lambda,Activation,Conv2DTranspose
 from tensorflow.keras.layers import UpSampling2D, Conv2DTranspose, BatchNormalization, Dropout

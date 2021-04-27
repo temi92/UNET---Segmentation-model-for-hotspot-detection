@@ -9,10 +9,14 @@ import gmplot
 from PIL import Image
 from PIL.ExifTags import TAGS
 import os
+
+
+class NoMetaData(Exception):
+    pass
 class GPSPlotter():
     def __init__(self, apikey,images):
         self.gps_positions = list(map(self.get_gps_position, images))
-        print (self.gps_positions)
+        print ("gps is ",  self.gps_positions)
         self.gmap = gmplot.GoogleMapPlotter(self.gps_positions[0][0] + 0.01, self.gps_positions[0][1] + 0.01,16, apikey=apikey)
 
     def plot_gps_points(self, filename):
@@ -30,11 +34,13 @@ class GPSPlotter():
     
     
     def get_gps_position(self, image_file):
-        for (k,v) in Image.open(image_file)._getexif().items():
-            if TAGS.get(k) == "GPSInfo":
-                lat, lon = self.convert_to_decimal_degrees(v[2], v[4]) 
-                return lat, lon
-        raise Exception("no GPS data available")
+        try :
+            for (k,v) in Image.open(image_file)._getexif().items():
+                if TAGS.get(k) == "GPSInfo":
+                    lat, lon = self.convert_to_decimal_degrees(v[2], v[4]) 
+                    return lat, lon
+        except AttributeError:
+            raise NoMetaData("no GPS data available")
         
         
     def convert_to_decimal_degrees(self, lat_dms, lon_dms):

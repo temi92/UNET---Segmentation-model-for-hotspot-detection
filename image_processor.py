@@ -31,7 +31,11 @@ def load_and_preprocess_image(images, masks):
     
     return np.array(image_list), np.array(masks_list)
 
-@tf.function
+def normalize_mask(mask, threshold=0.5):
+    mask[mask > threshold] = 1
+    mask[mask <= threshold] = 0
+    return mask
+
 def load_and_preprocess_testImage(image):
     # Open, decode, resize, normalize
     image = tf.io.read_file(image)
