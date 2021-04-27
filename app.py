@@ -127,8 +127,8 @@ def show_map():
             if contour_area > 20.0:
                 cv2.drawContours(mask_vis, [c], 0, 255, thickness=cv2.FILLED)
                 
-        cv2.imwrite(os.path.join(out_folder, base+".jpg"), mask_vis)
-        cv2.imwrite(os.path.join(out_folder, base+ "1" +".jpg"), mask)
+        cv2.imwrite(os.path.join("result", out_folder, base+".jpg"), mask_vis)
+    
 
         #check if numpy array is all zero hence (no hotspot)
         if np.all((mask_vis==0)):
