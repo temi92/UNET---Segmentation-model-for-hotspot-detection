@@ -1,0 +1,11 @@
+
+            
+version: "3.9"
+services:
+  detector:
+    image: temiodusina/hotspotdetector:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      #change the first part of this line (before the (:)) to where the resulting images should be stored on the host system
+      - C:\Users\odusi\Documents\docker_test:/home/UNET---Segmentation-model-for-hotspot-detection/result 
