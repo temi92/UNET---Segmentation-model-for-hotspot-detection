@@ -103,9 +103,9 @@ def predict_image():
 def show_map():
     #create directory to store results ...
     out_folder= datetime.now().strftime("%Y_%m_%d-%I_%M_%S")
-    out_folder = os.path.join(os.getcwd(), out_folder)
+    #out_folder = os.path.join(os.getcwd(), out_folder)
   
-    os.mkdir(out_folder)
+    os.mkdir(os.path.join("result", out_folder))
     img_paths = [ f for f in glob.glob(app.config['UPLOAD_FOLDER'] + "*")]
     test_dataset = tf.data.Dataset.from_tensor_slices(img_paths)
     test_dataset = test_dataset.map(load_and_preprocess_testImage).batch(batch_size)
