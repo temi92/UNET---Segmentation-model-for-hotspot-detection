@@ -7,5 +7,6 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      #change the first part of this line (before the (:)) to where the resulting images should be stored on the host system
+      #format is .. host:remote
+      #change the host path (i.e. before (:)) this tells the software where the resulting images would be stored
       - C:\Users\odusi\Documents\docker_test:/home/UNET---Segmentation-model-for-hotspot-detection/result 
