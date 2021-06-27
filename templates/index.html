@@ -31,14 +31,20 @@
 				<div class="top-margin"><h4><b>Please upload images for detection</b></h4></div>
 				<hr>
 			
-				 <form action="predict_image" method="post" enctype="multipart/form-data">
-                        <input type="file" multiple="" name="file[]" class="span3" />
+				 <form action="predict_image" method="post" enctype="multipart/form-data" id="form">
+                        <input type="file" id="image_files" multiple="" name="file[]" class="span3" />
+                        <hr>
+                         <h1><span class="badge badge-secondary">Flying height (m)</span><h1> <input name="height" id="height">
                         <input type="submit" id="upload" value="Upload"  class="span2">
                   </form>
+                
 				
+    		
 				
 
 			</div>
+			
+		
 			
 			<div class="row">
     			<div id="mapContent"></div>

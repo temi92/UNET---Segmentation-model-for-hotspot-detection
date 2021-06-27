@@ -3,12 +3,12 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>Google Maps - gmplot</title>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&key=AIzaSyA3Je_LyveY2Ot6Z7UD25JLwihOKs1o46M"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&key=AIzaSyAODtDkCU-PBBDjpDt5Xjbam8mkKw7dyrg"></script>
 <script type="text/javascript">
     function initialize() {
         var map = new google.maps.Map(document.getElementById("map_canvas"), {
-            zoom: 16,
-            center: new google.maps.LatLng(2.213994, 113.911131)
+            zoom: 10,
+            center: new google.maps.LatLng(2.233787, 113.892909)
         });
 
         var marker_icon_6495ED = {
@@ -17,25 +17,7 @@
         };
 
         new google.maps.Marker({
-            position: new google.maps.LatLng(2.203994, 113.901131),
-            icon: marker_icon_6495ED,
-            map: map
-        });
-
-        new google.maps.Marker({
-            position: new google.maps.LatLng(2.203994, 113.901139),
-            icon: marker_icon_6495ED,
-            map: map
-        });
-
-        new google.maps.Marker({
-            position: new google.maps.LatLng(0.000000, 0.000000),
-            icon: marker_icon_6495ED,
-            map: map
-        });
-
-        new google.maps.Marker({
-            position: new google.maps.LatLng(2.202510, 113.903549),
+            position: new google.maps.LatLng(2.223787, 113.882909),
             icon: marker_icon_6495ED,
             map: map
         });
@@ -59,12 +41,31 @@
             ],
             map: map,
             data: [
-                new google.maps.LatLng(2.203994, 113.901131),
-                new google.maps.LatLng(2.203994, 113.901139),
-                new google.maps.LatLng(0.000000, 0.000000),
-                new google.maps.LatLng(2.202510, 113.903549),
+                new google.maps.LatLng(2.223787, 113.882909),
                 new google.maps.LatLng(2.223813, 113.882944),
             ]
+        });
+
+        new google.maps.Marker({
+            label: {
+                text: "3.30m",
+                color: "#000000",
+                fontWeight: "bold"
+            },
+            icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX/TQBcNTh/AAAAAXRSTlMAQObYZgAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=",
+            position: new google.maps.LatLng(2.223787, 113.882909),
+            map: map
+        });
+
+        new google.maps.Marker({
+            label: {
+                text: "2.04m",
+                color: "#000000",
+                fontWeight: "bold"
+            },
+            icon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX/TQBcNTh/AAAAAXRSTlMAQObYZgAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=",
+            position: new google.maps.LatLng(2.223813, 113.882944),
+            map: map
         });
 
     }

@@ -42,6 +42,7 @@ def unet_model(finetune=False):
   
     
     x = mnv2.layers[-4].output
+    print(x)
 
     # Decoder
     x = deconv_block_rez(x, 512)
@@ -67,4 +68,6 @@ def unet_model(finetune=False):
     model = Model(inputs=mnv2.input, outputs=x)    
     return model
 
-unet_model()
+if __name__ == "__main__":
+    model = unet_model()
+    tf.keras.utils.plot_model(model, "mobilenet.png" , show_shapes=True)
