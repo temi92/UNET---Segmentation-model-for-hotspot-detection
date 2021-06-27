@@ -12,7 +12,15 @@ RUN pip install --no-cache-dir flask && pip install gmplot && pip install keras 
 
 WORKDIR /home
 
+ 
+
 RUN git clone https://github.com/temi92/UNET---Segmentation-model-for-hotspot-detection.git 
-    
+
+#having to manually copy the weights folder. GIT LFS is corrupting the file during the clone. 
+COPY weights/ /home/UNET---Segmentation-model-for-hotspot-detection/weights
+
+
+
+
 WORKDIR /home/UNET---Segmentation-model-for-hotspot-detection
 CMD ["python", "app.py"]
