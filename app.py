@@ -84,9 +84,6 @@ def predict_image():
     uploaded_files = request.files.getlist("file[]")
     
     height = request.form["height"]
-    
-    print ("height is ........{}".format(height))
-    print ("uploade files ......{}".format(uploaded_files))
     filenames = []
     for file in uploaded_files:
         # Check if the file is one of the allowed types/extensions
@@ -106,8 +103,6 @@ def predict_image():
 
 @app.route("/show_map/<height>")
 def show_map(height):
-    
-    print ("height is {}".format(height))
     #create directory to store results ...
     out_folder= datetime.now().strftime("%Y_%m_%d-%I_%M_%S")
     #out_folder = os.path.join(os.getcwd(), out_folder)  
