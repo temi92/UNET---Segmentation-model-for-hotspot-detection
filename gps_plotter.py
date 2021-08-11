@@ -74,7 +74,7 @@ class GPSPlotter():
         
         
     def convert_to_decimal_degrees(self, lat_dms, lon_dms):
-        lat = lat_dms[0] + lat_dms[1]/60.0 + lat_dms[2]/3600.0
+        lat = (lat_dms[0] + lat_dms[1]/60.0 + lat_dms[2]/3600.0) * -1 #fix for fact that gps parsing is wrong. we need to be below the equator
         
         lon = lon_dms[0] + lon_dms[1]/60.0 + lon_dms[2]/3600.0
         return lat, lon
